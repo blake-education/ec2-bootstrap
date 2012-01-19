@@ -1,0 +1,6 @@
+RUBY_VERSION=1.9.3-p0
+RUBY_PREFIX=/usr/local
+
+$HOME/src/ruby-build/bin/ruby-build $RUBY_VERSION $RUBY_PREFIX
+
+# vim: ft=sh
