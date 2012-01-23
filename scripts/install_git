@@ -1,0 +1,15 @@
+mkdir -p $HOME/src
+cd $HOME/src
+
+TAR=$HOME/src/git.tar.gz
+
+curl -L http://git-core.googlecode.com/files/git-1.7.8.4.tar.gz > $TAR
+
+mkdir git
+tar --strip-components 1 -C git -zxf $TAR
+
+cd git
+./configure --without-tcltk --without-python
+make install
+
+# vim: ft=sh
