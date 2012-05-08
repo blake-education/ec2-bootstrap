@@ -3,13 +3,17 @@ cd $HOME/src
 
 TAR=$HOME/src/git.tar.gz
 
-curl -L http://git-core.googlecode.com/files/git-1.7.8.4.tar.gz > $TAR
+VERSION=1.7.8.4
 
-mkdir git
-tar --strip-components 1 -C git -zxf $TAR
+if [[ ! git --version | grep -q $VERSION ]]; then
+  curl -L http://git-core.googlecode.com/files/git-$VERSION.tar.gz > $TAR
 
-cd git
-./configure --without-tcltk --without-python
-make install
+  mkdir git
+  tar --strip-components 1 -C git -zxf $TAR
+
+  cd git
+  ./configure --without-tcltk --without-python
+  make install
+fi
 
 # vim: ft=sh
