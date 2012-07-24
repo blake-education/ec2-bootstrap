@@ -3,7 +3,7 @@ cd $HOME/src
 
 TAR=$HOME/src/git.tar.gz
 
-VERSION=1.7.8.4
+VERSION=1.7.11.3
 
 if [[ ! git --version | grep -q $VERSION ]]; then
   curl -L http://git-core.googlecode.com/files/git-$VERSION.tar.gz > $TAR
