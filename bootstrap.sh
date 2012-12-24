@@ -17,10 +17,12 @@ cd $WORKDIR
 JQ=./vendor/jq
 S3CURL=./vendor/s3curl.pl
 
-curl -LO $BOOTSTRAP_HOME/vendor/jq
-chmod 0755 $JQ
+( cd vendor
+  curl -LO $BOOTSTRAP_HOME/vendor/jq
+  curl -LO $BOOTSTRAP_HOME/vendor/s3curl.pl
+)
 
-curl -LO $BOOTSTRAP_HOME/vendor/s3curl.pl
+chmod 0755 $JQ
 chmod 0755 $S3CURL
 
 
