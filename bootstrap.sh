@@ -11,7 +11,7 @@ S3_ROOT=ops.blakedev.com/bootstrap
 WORKDIR=$HOME/bootstrap
 
 
-mkdir $WORKDIR
+mkdir -p $WORKDIR/vendor
 cd $WORKDIR
 
 JQ=./vendor/jq
