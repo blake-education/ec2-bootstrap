@@ -31,7 +31,7 @@ apt-get install libdigest-hmac-perl
 
 ROLE=$(curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/)
 CREDENTIALS=$(curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/$ROLE)
-S3_ACCESS_KEY_ID=$(echo $CREDENTIALS | $JQ -r .AwsAccessKey)
+S3_ACCESS_KEY_ID=$(echo $CREDENTIALS | $JQ -r .AccessKeyId)
 S3_SECRET_KEY=$(echo $CREDENTIALS | $JQ -r .SecretAccessKey)
 S3_TOKEN=$(echo $CREDENTIALS | $JQ -r .Token)
 
