@@ -1,9 +1,0 @@
-mkdir -p $HOME/src
-cd $HOME/src
-
-curl -L https://github.com/sstephenson/ruby-build/tarball/master > ruby-build.tar.gz
-
-mkdir ruby-build
-tar --strip-components 1 -C ruby-build -zxf ruby-build.tar.gz
-
-# vim: ft=sh

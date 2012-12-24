@@ -1,8 +1,0 @@
-RUBY_VERSION=1.9.3-p327
-RUBY_PREFIX=/usr/local
-
-if [[ ! ruby -v | grep -q $RUBY_VERSION ]]; then
-  $HOME/src/ruby-build/bin/ruby-build $RUBY_VERSION $RUBY_PREFIX
-fi
-
-# vim: ft=sh
