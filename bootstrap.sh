@@ -7,7 +7,7 @@ cd $HERE
 
 
 BOOTSTRAP_HOME=https://raw.github.com/blake-education/ec2-bootstrap/master
-S3_ROOT=ops.blakedev.com/bootstrap
+S3_ROOT=http://s3.amazonaws.com/ops.blakedev.com/bootstrap
 WORKDIR=$HOME/bootstrap
 
 
