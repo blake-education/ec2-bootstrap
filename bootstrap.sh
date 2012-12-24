@@ -22,8 +22,11 @@ S3CURL=./vendor/s3curl.pl
   curl -LO $BOOTSTRAP_HOME/vendor/s3curl.pl
 )
 
+
 chmod 0755 $JQ
 chmod 0755 $S3CURL
+
+apt-get install libdigest-hmac-perl
 
 
 ROLE=$(curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/)
