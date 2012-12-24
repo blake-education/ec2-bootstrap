@@ -39,5 +39,4 @@ runurl install_essentials
 runurl install_ruby_build
 runurl install_ruby
 runurl install_git
-runurl install_chef_user
 runurl install_blake_cloud
