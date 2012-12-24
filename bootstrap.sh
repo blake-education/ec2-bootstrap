@@ -36,7 +36,7 @@ S3_SECRET_KEY=$(echo $CREDENTIALS | $JQ -r .SecretAccessKey)
 S3_TOKEN=$(echo $CREDENTIALS | $JQ -r .Token)
 
 runurl () {
-  $S3CURL --id $S3_ACCESS_KEY_ID --key $S3_SECRET_KEY -- -H "x-amz-security-token: $S3_TOKEN" $S3_ROOT/$1 | /bin/bash -e
+  $S3CURL --id $S3_ACCESS_KEY_ID --key $S3_SECRET_KEY -- -H "x-amz-security-token: $S3_TOKEN" $S3_ROOT/$1 2> /dev/null | /bin/bash -e
 }
 
 runurl apt
