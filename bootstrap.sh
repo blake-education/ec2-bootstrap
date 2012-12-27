@@ -36,7 +36,7 @@ S3_SECRET_KEY=$(echo $CREDENTIALS | jq -r .SecretAccessKey)
 S3_TOKEN=$(echo $CREDENTIALS | jq -r .Token)
 
 dl () {
-  s3curl.pl --id $S3_ACCESS_KEY_ID --key $S3_SECRET_KEY -- -H "x-amz-security-token: $S3_TOKEN" -f $S3_ROOT/$1 && exit 1
+  s3curl.pl --id $S3_ACCESS_KEY_ID --key $S3_SECRET_KEY -- -H "x-amz-security-token: $S3_TOKEN" -f $S3_ROOT/$1
 }
 
 runurl () {
@@ -46,9 +46,13 @@ runurl () {
   dl $1 | /bin/bash -e
 }
 
+
 runurl apt
 runurl install_essentials
 runurl install_ruby_build
 runurl install_ruby
+runurl install_ruby_essentials
 runurl install_git
 runurl install_blake_cloud
+
+dl cloud_prepare_at_boot > /var/lib/blake-cloud/prepare_at_boot.sh
