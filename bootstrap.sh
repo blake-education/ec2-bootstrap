@@ -19,8 +19,8 @@ export PATH=/usr/local/bin:$PATH
 mkdir -p /usr/local/bin
 
 ( cd /usr/local/bin
-  curl -LO $BOOTSTRAP_HOME/vendor/jq
-  curl -LO $BOOTSTRAP_HOME/vendor/s3curl.pl
+  curl -s -LO $BOOTSTRAP_HOME/vendor/jq
+  curl -s -LO $BOOTSTRAP_HOME/vendor/s3curl.pl
 
   chmod 0755 jq
   chmod 0755 s3curl.pl
@@ -35,8 +35,19 @@ S3_ACCESS_KEY_ID=$(echo $CREDENTIALS | jq -r .AccessKeyId)
 S3_SECRET_KEY=$(echo $CREDENTIALS | jq -r .SecretAccessKey)
 S3_TOKEN=$(echo $CREDENTIALS | jq -r .Token)
 
+cat <<EODOTFILE > ~/.s3curl
+%awsSecretAccessKeys = (
+  iam => {
+      id => '$S3_ACCESS_KEY_ID',
+      key => '$S3_SECRET_KEY',
+  }
+);
+EODOTFILE
+
+chmod 0600 ~/.s3curl
+
 dl () {
-  s3curl.pl --id $S3_ACCESS_KEY_ID --key $S3_SECRET_KEY -- -H "x-amz-security-token: $S3_TOKEN" -f $S3_ROOT/$1
+  s3curl.pl --id iam -- -H "x-amz-security-token: $S3_TOKEN" -f -s $S3_ROOT/$1
 }
 
 runurl () {
