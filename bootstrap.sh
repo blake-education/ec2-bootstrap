@@ -14,29 +14,36 @@ WORKDIR=$HOME/bootstrap
 mkdir -p $WORKDIR/vendor
 cd $WORKDIR
 
-JQ=./vendor/jq
-S3CURL=./vendor/s3curl.pl
 
-( cd vendor
+export PATH=/usr/local/bin:$PATH
+mkdir -p /usr/local/bin
+
+( cd /usr/local/bin
   curl -LO $BOOTSTRAP_HOME/vendor/jq
   curl -LO $BOOTSTRAP_HOME/vendor/s3curl.pl
+
+  chmod 0755 jq
+  chmod 0755 s3curl.pl
 )
-
-
-chmod 0755 $JQ
-chmod 0755 $S3CURL
 
 apt-get install libdigest-hmac-perl
 
 
 ROLE=$(curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/)
 CREDENTIALS=$(curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/$ROLE)
-S3_ACCESS_KEY_ID=$(echo $CREDENTIALS | $JQ -r .AccessKeyId)
-S3_SECRET_KEY=$(echo $CREDENTIALS | $JQ -r .SecretAccessKey)
-S3_TOKEN=$(echo $CREDENTIALS | $JQ -r .Token)
+S3_ACCESS_KEY_ID=$(echo $CREDENTIALS | jq -r .AccessKeyId)
+S3_SECRET_KEY=$(echo $CREDENTIALS | jq -r .SecretAccessKey)
+S3_TOKEN=$(echo $CREDENTIALS | jq -r .Token)
+
+dl () {
+  s3curl.pl --id $S3_ACCESS_KEY_ID --key $S3_SECRET_KEY -- -H "x-amz-security-token: $S3_TOKEN" -f $S3_ROOT/$1 && exit 1
+}
 
 runurl () {
-  $S3CURL --id $S3_ACCESS_KEY_ID --key $S3_SECRET_KEY -- -H "x-amz-security-token: $S3_TOKEN" $S3_ROOT/$1 2> /dev/null | /bin/bash -e
+  echo
+  echo running url $1
+  echo
+  dl $1 | /bin/bash -e
 }
 
 runurl apt
