@@ -67,5 +67,10 @@ runurl install_git
 runurl install_blake_cloud
 
 BC=/var/lib/blake-cloud/blake_cloud.sh
-dl blake_cloud.sh > $BC
+dl files/blake_cloud.sh > $BC
 chmod 0700 $BC
+
+
+GET_INSTANCE_NAME=/usr/local/bin/get_instance_name
+dl files/get_instance_name > $GET_INSTANCE_NAME
+chmod 0700 $GET_INSTANCE_NAME
