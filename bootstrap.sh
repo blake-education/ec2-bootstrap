@@ -66,4 +66,6 @@ runurl install_ruby_essentials
 runurl install_git
 runurl install_blake_cloud
 
-dl cloud_prepare_at_boot > /var/lib/blake-cloud/prepare_at_boot.sh
+BC=/var/lib/blake-cloud/blake_cloud.sh
+dl blake_cloud.sh > $BC
+chmod 0700 $BC
