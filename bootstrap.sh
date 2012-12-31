@@ -52,9 +52,9 @@ dl () {
 
 runurl () {
   echo
-  echo running url $1
+  echo running url $1 >> /var/log/blake-bootstrap.log
   echo
-  dl $1 | /bin/bash -e
+  dl $1 | /bin/bash -ex >> /var/log/blake-bootstrap.log 2>&1
 }
 
 
