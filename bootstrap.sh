@@ -1,5 +1,6 @@
 #!/bin/bash
 
+(
 set -ex
 
 HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
@@ -76,3 +77,5 @@ chmod 0700 $BC
 GET_INSTANCE_NAME=/usr/local/bin/get_instance_name
 dl files/get_instance_name > $GET_INSTANCE_NAME
 chmod 0700 $GET_INSTANCE_NAME
+
+) >> /var/log/blake-bootstrap-outer.log 2>&1
