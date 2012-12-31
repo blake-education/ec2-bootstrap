@@ -16,6 +16,8 @@ cd $WORKDIR
 
 
 export PATH=/usr/local/bin:$PATH
+env >> /var/log/blake-bootstrap.log
+
 mkdir -p /usr/local/bin
 
 ( cd /usr/local/bin
