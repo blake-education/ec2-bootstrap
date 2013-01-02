@@ -85,4 +85,4 @@ GET_INSTANCE_NAME=/usr/local/bin/get_instance_name
 dl files/get_instance_name > $GET_INSTANCE_NAME
 chmod 0700 $GET_INSTANCE_NAME
 
-) >> /var/log/blake-bootstrap.log 2>&1
+) 2>&1 | tee --append /var/log/blake-bootstrap.log
