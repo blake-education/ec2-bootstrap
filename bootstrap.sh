@@ -36,7 +36,10 @@ mkdir -p /usr/local/bin
   chmod 0755 s3curl.pl
 )
 
-apt-get install libdigest-hmac-perl
+
+apt-get -y install libdigest-hmac-perl python-setuptools
+
+easy_install https://github.com/blake-education/aws-cfn-bootstrap/archive/master.tar.gz
 
 
 ROLE=$(curl -s http://169.254.169.254/latest/meta-data/iam/security-credentials/)
@@ -55,6 +58,34 @@ cat <<EODOTFILE > ~/.s3curl
 EODOTFILE
 
 chmod 0600 ~/.s3curl
+
+
+
+
+CREDENTIAL_FILE=$HOME/.cfn-credentials
+
+cat <<EOCREDENTIALS > $CREDENTIAL_FILE
+AWSAccessKeyId=$S3_ACCESS_KEY_ID
+AWSSecretKey=$S3_SECRET_KEY
+SecurityToken=$S3_TOKEN
+EOCREDENTIALS
+
+chmod 0600 $CREDENTIAL_FILE
+
+
+function error_exit {
+  cfn-signal -e 1 -r "$1" "$CFN_WAITHANDLE"
+  exit 1
+}
+
+
+# init cfn
+cfn-init --region "$CFN_REGION" \
+         -s "$CFN_STACK" \
+         -r "$CFN_RESOURCE_ID" \
+         --credential-file "$CREDENTIAL_FILE" || error_exit 'Failed to run cfn-init'
+
+
 
 dl () {
   s3curl.pl --id iam -- -H "x-amz-security-token: $S3_TOKEN" -f -s $S3_ROOT/$1
@@ -84,5 +115,8 @@ chmod 0700 $BC
 GET_INSTANCE_NAME=/usr/local/bin/get_instance_name
 dl files/get_instance_name > $GET_INSTANCE_NAME
 chmod 0700 $GET_INSTANCE_NAME
+
+
+cfn-signal -e 0 -r 'Server configuration' "$CFN_WAITHANDLE"
 
 ) 2>&1 | tee --append /var/log/blake-bootstrap.log
